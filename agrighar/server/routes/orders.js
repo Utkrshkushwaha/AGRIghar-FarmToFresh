@@ -18,7 +18,6 @@ router.post("/", protect, authorize("consumer", "vendor"), async (req, res) => {
       return res.status(400).json({ message: "Delivery address is required" });
     }
 
-    // Build order items with product details
     let totalAmount = 0;
     const orderItems = [];
 
@@ -38,8 +37,6 @@ router.post("/", protect, authorize("consumer", "vendor"), async (req, res) => {
       });
 
       totalAmount += product.price * item.qty;
-
-      // Reduce stock
       await Product.findByIdAndUpdate(product._id, { $inc: { quantity: -item.qty } });
     }
 
@@ -66,8 +63,9 @@ router.post("/", protect, authorize("consumer", "vendor"), async (req, res) => {
   }
 });
 
+// ⚠️ NAMED ROUTES MUST BE BEFORE /:id
+
 // ── GET /api/orders/my-orders ─────────────────────────────────
-// Consumer — get own orders
 router.get("/my-orders", protect, async (req, res) => {
   try {
     const orders = await Order.find({ consumerId: req.user._id }).sort({ createdAt: -1 });
@@ -78,7 +76,6 @@ router.get("/my-orders", protect, async (req, res) => {
 });
 
 // ── GET /api/orders/farmer-orders ────────────────────────────
-// Farmer — get orders containing their products
 router.get("/farmer-orders", protect, authorize("farmer"), async (req, res) => {
   try {
     const orders = await Order.find({ "items.farmerId": req.user._id }).sort({ createdAt: -1 });
@@ -90,6 +87,81 @@ router.get("/farmer-orders", protect, authorize("farmer"), async (req, res) => {
 
 // ── GET /api/orders/:id ───────────────────────────────────────
 router.get("/:id", protect, async (req, res) => {
+  try {
+    const order = await Order.findById(req.params.id);
+    if (!order) return res.status(404).json({ message: "Order not found" });
+
+    const isFarmerInOrder = order.items.some(
+      (i) => i.farmerId?.toString() === req.user._id.toString()
+    );
+    if (
+      order.consumerId.toString() !== req.user._id.toString() &&
+      !isFarmerInOrder &&
+      req.user.role !== "admin"
+    ) {
+      return res.status(403).json({ message: "Not authorized" });
+    }
+
+    res.json(order);
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+});
+
+// ── PUT /api/orders/:id/status ────────────────────────────────
+router.put("/:id/status", protect, authorize("farmer", "admin"), async (req, res) => {
+  try {
+    const { status, note } = req.body;
+    const validStatuses = ["confirmed", "dispatched", "delivered", "cancelled"];
+
+    if (!validStatuses.includes(status)) {
+      return res.status(400).json({ message: "Invalid status" });
+    }
+
+    const order = await Order.findById(req.params.id);
+    if (!order) return res.status(404).json({ message: "Order not found" });
+
+    order.status = status;
+    order.statusHistory.push({ status, note: note || `Marked as ${status}` });
+
+    if (status === "delivered" && order.paymentMethod === "cod") {
+      order.paymentStatus = "paid";
+    }
+
+    await order.save();
+    res.json(order);
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+});
+
+// ── PUT /api/orders/:id/cancel ────────────────────────────────
+router.put("/:id/cancel", protect, async (req, res) => {
+  try {
+    const order = await Order.findById(req.params.id);
+    if (!order) return res.status(404).json({ message: "Order not found" });
+    if (order.consumerId.toString() !== req.user._id.toString()) {
+      return res.status(403).json({ message: "Not authorized" });
+    }
+    if (order.status !== "pending") {
+      return res.status(400).json({ message: "Only pending orders can be cancelled" });
+    }
+
+    order.status = "cancelled";
+    order.statusHistory.push({ status: "cancelled", note: "Cancelled by consumer" });
+
+    for (const item of order.items) {
+      await Product.findByIdAndUpdate(item.productId, { $inc: { quantity: item.qty } });
+    }
+
+    await order.save();
+    res.json(order);
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+});
+
+module.exports = router;
   try {
     const order = await Order.findById(req.params.id);
     if (!order) return res.status(404).json({ message: "Order not found" });
