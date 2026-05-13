@@ -26,32 +26,41 @@ const MOCK_PRODUCTS = {
 
 // Keyword to image mapping — matches product name to correct photo
 const PRODUCT_IMAGE_MAP = [
-  { keywords: ["tomato"],    img: "https://images.unsplash.com/photo-1546094096-0df4bcaaa337?w=600&h=400&fit=crop" },
-  { keywords: ["spinach","palak"], img: "https://images.unsplash.com/photo-1576045057995-568f588f82fb?w=600&h=400&fit=crop" },
-  { keywords: ["onion"],     img: "https://images.unsplash.com/photo-1518977676601-b53f82aba655?w=600&h=400&fit=crop" },
-  { keywords: ["potato","aloo"], img: "https://images.unsplash.com/photo-1587735243615-c03f25aaff15?w=600&h=400&fit=crop" },
-  { keywords: ["carrot"],    img: "https://images.unsplash.com/photo-1598170845058-32b9d6a5da37?w=600&h=400&fit=crop" },
+  { keywords: ["tomato","tamatar"],  img: "https://images.unsplash.com/photo-1546094096-0df4bcaaa337?w=600&h=400&fit=crop" },
+  { keywords: ["spinach","palak"],   img: "https://images.unsplash.com/photo-1576045057995-568f588f82fb?w=600&h=400&fit=crop" },
+  { keywords: ["onion","pyaz","kanda"], img: "https://images.unsplash.com/photo-1518977676601-b53f82aba655?w=600&h=400&fit=crop" },
+  { keywords: ["potato","aloo","batata"], img: "https://images.unsplash.com/photo-1587735243615-c03f25aaff15?w=600&h=400&fit=crop" },
+  { keywords: ["carrot","gajar"],    img: "https://images.unsplash.com/photo-1598170845058-32b9d6a5da37?w=600&h=400&fit=crop" },
   { keywords: ["cauliflower","gobi"], img: "https://images.unsplash.com/photo-1568584711075-3d021a7c3ca3?w=600&h=400&fit=crop" },
-  { keywords: ["cucumber"],  img: "https://images.unsplash.com/photo-1449300079323-02e209d9d3a6?w=600&h=400&fit=crop" },
-  { keywords: ["mango","aam"],  img: "https://images.unsplash.com/photo-1553279768-865429fa0078?w=600&h=400&fit=crop" },
-  { keywords: ["banana","kela"],img: "https://images.unsplash.com/photo-1571771894821-ce9b6c11b08e?w=600&h=400&fit=crop" },
-  { keywords: ["apple","seb"],  img: "https://images.unsplash.com/photo-1619546813926-a78fa6372cd2?w=600&h=400&fit=crop" },
-  { keywords: ["grape"],        img: "https://images.unsplash.com/photo-1537640538966-79f369143f8f?w=600&h=400&fit=crop" },
-  { keywords: ["orange"],       img: "https://images.unsplash.com/photo-1547514701-42782101795e?w=600&h=400&fit=crop" },
-  { keywords: ["pineapple"],    img: "https://images.unsplash.com/photo-1550258987-190a2d41a8ba?w=600&h=400&fit=crop" },
-  { keywords: ["watermelon"],   img: "https://images.unsplash.com/photo-1563114773-84221bd62daa?w=600&h=400&fit=crop" },
+  { keywords: ["cucumber","kheera"], img: "https://images.unsplash.com/photo-1449300079323-02e209d9d3a6?w=600&h=400&fit=crop" },
+  { keywords: ["brinjal","eggplant","baingan"], img: "https://images.unsplash.com/photo-1615484477778-ca3b77940c25?w=600&h=400&fit=crop" },
+  { keywords: ["capsicum","shimla","pepper"], img: "https://images.unsplash.com/photo-1563565375-f3fdfdbefa83?w=600&h=400&fit=crop" },
+  { keywords: ["ladyfinger","bhindi","okra"], img: "https://images.unsplash.com/photo-1628773822503-930a7eaecf80?w=600&h=400&fit=crop" },
+  { keywords: ["pumpkin","kaddu"],   img: "https://images.unsplash.com/photo-1570586437263-ab629fccc818?w=600&h=400&fit=crop" },
+  { keywords: ["mango","aam","alphonso","kesar","hapus"], img: "https://images.unsplash.com/photo-1553279768-865429fa0078?w=600&h=400&fit=crop" },
+  { keywords: ["banana","kela"],     img: "https://images.unsplash.com/photo-1571771894821-ce9b6c11b08e?w=600&h=400&fit=crop" },
+  { keywords: ["apple","seb"],       img: "https://images.unsplash.com/photo-1619546813926-a78fa6372cd2?w=600&h=400&fit=crop" },
+  { keywords: ["grape","angur"],     img: "https://images.unsplash.com/photo-1537640538966-79f369143f8f?w=600&h=400&fit=crop" },
+  { keywords: ["orange","santra"],   img: "https://images.unsplash.com/photo-1547514701-42782101795e?w=600&h=400&fit=crop" },
+  { keywords: ["pineapple","ananas"], img: "https://images.unsplash.com/photo-1550258987-190a2d41a8ba?w=600&h=400&fit=crop" },
+  { keywords: ["watermelon","tarbooz"], img: "https://images.unsplash.com/photo-1563114773-84221bd62daa?w=600&h=400&fit=crop" },
+  { keywords: ["papaya","papita"],   img: "https://images.unsplash.com/photo-1526318896980-cf78c088247c?w=600&h=400&fit=crop" },
+  { keywords: ["guava","amrood"],    img: "https://images.unsplash.com/photo-1536511132770-e5058c7e8c46?w=600&h=400&fit=crop" },
+  { keywords: ["lemon","nimbu"],     img: "https://images.unsplash.com/photo-1587486913049-53fc88980cfc?w=600&h=400&fit=crop" },
+  { keywords: ["coconut","nariyal"], img: "https://images.unsplash.com/photo-1580984969071-a8da5656c2fb?w=600&h=400&fit=crop" },
   { keywords: ["rice","chawal","basmati"], img: "https://images.unsplash.com/photo-1586201375761-83865001e31c?w=600&h=400&fit=crop" },
-  { keywords: ["wheat","flour","atta"],    img: "https://images.unsplash.com/photo-1574323347407-f5e1ad6d020b?w=600&h=400&fit=crop" },
-  { keywords: ["corn","maize"],  img: "https://images.unsplash.com/photo-1551754655-cd27e38d2076?w=600&h=400&fit=crop" },
-  { keywords: ["milk","doodh"],  img: "https://images.unsplash.com/photo-1550583724-b2692b85b150?w=600&h=400&fit=crop" },
-  { keywords: ["paneer"],        img: "https://images.unsplash.com/photo-1631452180519-c014fe946bc7?w=600&h=400&fit=crop" },
-  { keywords: ["ghee","butter"], img: "https://images.unsplash.com/photo-1559598467-f8b76c8155d0?w=600&h=400&fit=crop" },
-  { keywords: ["curd","dahi"],   img: "https://images.unsplash.com/photo-1488477181946-6428a0291777?w=600&h=400&fit=crop" },
-  { keywords: ["turmeric","haldi"], img: "https://images.unsplash.com/photo-1615485500704-8e990f9900f7?w=600&h=400&fit=crop" },
+  { keywords: ["wheat","flour","atta","gehu"], img: "https://images.unsplash.com/photo-1574323347407-f5e1ad6d020b?w=600&h=400&fit=crop" },
+  { keywords: ["corn","maize","makka"], img: "https://images.unsplash.com/photo-1551754655-cd27e38d2076?w=600&h=400&fit=crop" },
+  { keywords: ["dal","lentil","pulse","moong","chana"], img: "https://images.unsplash.com/photo-1585996160832-5b8e0b4e8b8e?w=600&h=400&fit=crop" },
+  { keywords: ["milk","doodh"],      img: "https://images.unsplash.com/photo-1550583724-b2692b85b150?w=600&h=400&fit=crop" },
+  { keywords: ["paneer","cheese"],   img: "https://images.unsplash.com/photo-1631452180519-c014fe946bc7?w=600&h=400&fit=crop" },
+  { keywords: ["ghee","butter"],     img: "https://images.unsplash.com/photo-1559598467-f8b76c8155d0?w=600&h=400&fit=crop" },
+  { keywords: ["curd","dahi","yogurt"], img: "https://images.unsplash.com/photo-1488477181946-6428a0291777?w=600&h=400&fit=crop" },
+  { keywords: ["turmeric","haldi"],  img: "https://images.unsplash.com/photo-1615485500704-8e990f9900f7?w=600&h=400&fit=crop" },
   { keywords: ["chilli","chili","mirch"], img: "https://images.unsplash.com/photo-1583119022894-919a68a3d0e3?w=600&h=400&fit=crop" },
+  { keywords: ["ginger","adrak"],    img: "https://images.unsplash.com/photo-1615485291234-9d694218aeb3?w=600&h=400&fit=crop" },
+  { keywords: ["garlic","lahsun"],   img: "https://images.unsplash.com/photo-1540148426945-6cf22a6b2383?w=600&h=400&fit=crop" },
   { keywords: ["coriander","dhania"], img: "https://images.unsplash.com/photo-1596040033229-a9821ebd058d?w=600&h=400&fit=crop" },
-  { keywords: ["ginger","adrak"], img: "https://images.unsplash.com/photo-1615485291234-9d694218aeb3?w=600&h=400&fit=crop" },
-  { keywords: ["garlic","lahsun"], img: "https://images.unsplash.com/photo-1540148426945-6cf22a6b2383?w=600&h=400&fit=crop" },
 ];
 
 const CATEGORY_FALLBACK = {
@@ -65,11 +74,21 @@ const CATEGORY_FALLBACK = {
 
 const getProductImage = (product) => {
   if (product.image) return product.image;
-  const nameLower = (product.name || "").toLowerCase();
-  const match = PRODUCT_IMAGE_MAP.find((m) =>
-    m.keywords.some((kw) => nameLower.includes(kw))
+  const nameLower = (product.name || "").toLowerCase().trim();
+
+  // Exact match first
+  const exactMatch = PRODUCT_IMAGE_MAP.find((m) =>
+    m.keywords.some((kw) => nameLower === kw.toLowerCase())
   );
-  return match ? match.img : (CATEGORY_FALLBACK[product.category] || CATEGORY_FALLBACK.other);
+  if (exactMatch) return exactMatch.img;
+
+  // Partial match
+  const partialMatch = PRODUCT_IMAGE_MAP.find((m) =>
+    m.keywords.some((kw) => nameLower.includes(kw.toLowerCase()))
+  );
+  if (partialMatch) return partialMatch.img;
+
+  return CATEGORY_FALLBACK[product.category] || CATEGORY_FALLBACK.other;
 };
 
 const MOCK_REVIEWS = [
