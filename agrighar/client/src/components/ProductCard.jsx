@@ -68,13 +68,13 @@ const PRODUCT_IMAGE_MAP = [
   { keywords: ["mustard","sarson","rai"], img: "https://images.unsplash.com/photo-1596040033229-a9821ebd058d?w=400&h=300&fit=crop" },
 ];
 
-// Category fallback images
+// Category fallback images — used when no keyword matches
 const CATEGORY_FALLBACK = {
-  vegetables: "https://images.unsplash.com/photo-1540420773420-3366772f4999?w=400&h=300&fit=crop",
-  fruits:     "https://images.unsplash.com/photo-1619566636858-adf3ef46400b?w=400&h=300&fit=crop",
-  grains:     "https://images.unsplash.com/photo-1603048588665-791ca8aea617?w=400&h=300&fit=crop",
-  dairy:      "https://images.unsplash.com/photo-1550583724-b2692b85b150?w=400&h=300&fit=crop",
-  spices:     "https://images.unsplash.com/photo-1596040033229-a9821ebd058d?w=400&h=300&fit=crop",
+  vegetables: "https://images.unsplash.com/photo-1587735243615-c03f25aaff15?w=400&h=300&fit=crop", // potatoes
+  fruits:     "https://images.unsplash.com/photo-1553279768-865429fa0078?w=400&h=300&fit=crop",     // mangoes
+  grains:     "https://images.unsplash.com/photo-1586201375761-83865001e31c?w=400&h=300&fit=crop",  // rice
+  dairy:      "https://images.unsplash.com/photo-1550583724-b2692b85b150?w=400&h=300&fit=crop",     // milk
+  spices:     "https://images.unsplash.com/photo-1615485500704-8e990f9900f7?w=400&h=300&fit=crop",  // turmeric
   other:      "https://images.unsplash.com/photo-1542838132-92c53300491e?w=400&h=300&fit=crop",
 };
 
@@ -83,15 +83,15 @@ const getProductImage = (product) => {
   if (product.image) return product.image;
   const nameLower = (product.name || "").toLowerCase().trim();
 
-  // Try exact match first
+  // Try exact keyword match first
   const exactMatch = PRODUCT_IMAGE_MAP.find((m) =>
     m.keywords.some((kw) => nameLower === kw.toLowerCase())
   );
   if (exactMatch) return exactMatch.img;
 
-  // Try partial match
+  // Try partial keyword match
   const partialMatch = PRODUCT_IMAGE_MAP.find((m) =>
-    m.keywords.some((kw) => nameLower.includes(kw.toLowerCase()))
+    m.keywords.some((kw) => nameLower.includes(kw.toLowerCase()) || kw.toLowerCase().includes(nameLower))
   );
   if (partialMatch) return partialMatch.img;
 
